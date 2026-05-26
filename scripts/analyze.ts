@@ -99,20 +99,20 @@ async function main() {
   const rawData = readFileSync(rawDataPath, 'utf-8')
   console.log(`[analyze] Loaded raw data (${rawData.length} bytes)`)
 
-  const apiKey = process.env.DEEPSEEK_API_KEY
+  const apiKey = process.env.DASHSCOPE_API_KEY
   if (!apiKey) {
-    console.error('[analyze] DEEPSEEK_API_KEY not set')
+    console.error('[analyze] DASHSCOPE_API_KEY not set')
     process.exit(1)
   }
 
   const client = new OpenAI({
-    baseURL: 'https://api.deepseek.com',
+    baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
     apiKey
   })
 
-  console.log('[analyze] Calling DeepSeek API for analysis...')
+  console.log('[analyze] Calling Qwen API for analysis...')
   const response = await client.chat.completions.create({
-    model: 'deepseek-chat',
+    model: 'qwen-plus',
     max_tokens: 8000,
     messages: [
       {
@@ -124,7 +124,7 @@ async function main() {
 
   const text = response.choices[0]?.message?.content
   if (!text) {
-    console.error('[analyze] No response from DeepSeek')
+    console.error('[analyze] No response from Qwen')
     process.exit(1)
   }
 

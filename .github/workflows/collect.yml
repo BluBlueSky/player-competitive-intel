@@ -24,10 +24,10 @@ jobs:
       - name: Run data collectors
         run: npm run collect
 
-      - name: Analyze with DeepSeek API
+      - name: Analyze with Qwen API
         run: npm run analyze
         env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
 
       - name: Commit and push report
         run: |
