@@ -1,0 +1,39 @@
+name: Weekly Competitive Intelligence Collection
+
+on:
+  schedule:
+    # Every Friday at 10:00 UTC (18:00 Beijing Time)
+    - cron: '0 10 * * 5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  collect-and-analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run data collectors
+        run: npm run collect
+
+      - name: Analyze with Claude API
+        run: npm run analyze
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit and push report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/ data/
+          git diff --staged --quiet || git commit -m "feat: add weekly report $(date +%Y-%m-%d)"
+          git push

@@ -1,0 +1,312 @@
+{
+  "date": "2026-05-23",
+  "title": "第1期 播放器竞品周报",
+  "coreInsights": [
+    {
+      "type": "warning",
+      "title": "VLC 4.0 即将发布，UI 全面重构",
+      "content": "VLC 官方博客确认 4.0 版本进入 RC 阶段，采用全新 Qt6 界面，支持 VR 播放和云端媒体库同步，预计对现有格局产生重大影响。",
+      "source": "竞品官网",
+      "sourceUrl": "https://www.videolan.org/vlc/releases/4.0.0.html",
+      "images": [
+        { "url": "https://images.videolan.org/vlc/screenshots/vlc-4.0-new-ui.png", "caption": "VLC 4.0 全新界面" }
+      ]
+    },
+    {
+      "type": "opportunity",
+      "title": "用户对 HDR 映射功能需求激增",
+      "content": "知乎「视频播放器推荐」话题下近两周新增多个关于 HDR→SDR 色调映射的讨论，用户反馈现有播放器处理不佳，存在差异化机会。",
+      "source": "知乎",
+      "sourceUrl": "https://www.zhihu.com/question/123456789"
+    },
+    {
+      "type": "trend",
+      "title": "IINA 招聘 Swift 高级工程师，信号明显",
+      "content": "IINA 团队在 Boss 直聘发布多个 Swift/Metal 方向职位，结合其 GitHub 活跃度提升，预计近期有重大版本更新。",
+      "source": "Boss直聘",
+      "sourceUrl": "https://www.zhipin.com/job_detail/xxx"
+    },
+    {
+      "type": "warning",
+      "title": "MX Player 差评集中在广告过多",
+      "content": "Google Play 近一周 1-2 星评论中，72% 提到广告干扰体验，但其免费模式下载量仍在增长，说明免费+广告模式有市场但用户耐心有限。",
+      "source": "应用商店",
+      "sourceUrl": "https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad&showAllReviews=true"
+    },
+    {
+      "type": "opportunity",
+      "title": "字幕智能匹配成新竞争维度",
+      "content": "PotPlayer 和 Infuse 最新版均加入了在线字幕自动搜索和 AI 翻译功能，用户反响积极，可能成为新的核心竞争力。",
+      "source": "竞品官网",
+      "sourceUrl": "https://potplayer.daum.net/",
+      "images": [
+        { "url": "https://firecore.com/images/infuse-subtitle-matching.png", "caption": "Infuse 字幕智能匹配界面" }
+      ]
+    }
+  ],
+  "competitorUpdates": [
+    {
+      "name": "VLC",
+      "platform": "全平台",
+      "updates": [
+        {
+          "type": "version",
+          "title": "VLC 4.0 RC1 发布",
+          "detail": "全新 Qt6 界面、媒体库管理重构、VR/360° 视频原生支持、新增云同步功能",
+          "source": "videolan.org",
+          "sourceUrl": "https://www.videolan.org/vlc/releases/4.0.0.html",
+          "impact": "high",
+          "images": [
+            { "url": "https://images.videolan.org/vlc/screenshots/vlc-4.0-media-library.png", "caption": "VLC 4.0 媒体库" },
+            { "url": "https://images.videolan.org/vlc/screenshots/vlc-4.0-vr-mode.png", "caption": "VLC 4.0 VR 模式" }
+          ]
+        },
+        {
+          "type": "feature",
+          "title": "新增 AV1 硬件解码支持",
+          "detail": "在支持的 GPU 上启用 AV1 硬件加速，性能提升 40%",
+          "source": "GitHub Release Notes",
+          "sourceUrl": "https://github.com/videolan/vlc/releases/tag/4.0.0-rc1",
+          "impact": "medium"
+        }
+      ]
+    },
+    {
+      "name": "PotPlayer",
+      "platform": "Windows",
+      "updates": [
+        {
+          "type": "feature",
+          "title": "AI 字幕翻译功能上线",
+          "detail": "集成本地 AI 模型，支持实时字幕翻译，支持 30+ 语言",
+          "source": "potplayer.daum.net",
+          "sourceUrl": "https://potplayer.daum.net/",
+          "impact": "high",
+          "images": [
+            { "url": "https://potplayer.daum.net/screenshots/ai-subtitle-translate.png", "caption": "PotPlayer AI 字幕翻译" }
+          ]
+        },
+        {
+          "type": "version",
+          "title": "版本 240520 更新",
+          "detail": "修复高刷新率下的音画同步问题，优化 4K HEVC 解码性能",
+          "source": "官网更新日志",
+          "sourceUrl": "https://potplayer.daum.net/publicRelease",
+          "impact": "low"
+        }
+      ]
+    },
+    {
+      "name": "IINA",
+      "platform": "macOS",
+      "updates": [
+        {
+          "type": "hiring",
+          "title": "招聘 Metal 渲染工程师",
+          "detail": "职位描述强调 Metal API 和 HDR 渲染经验，暗示将大幅优化 macOS 上的 HDR 播放体验",
+          "source": "Boss直聘",
+          "sourceUrl": "https://www.zhipin.com/job_detail/xxx",
+          "impact": "medium"
+        },
+        {
+          "type": "strategy",
+          "title": "GitHub 贡献者活跃度提升 200%",
+          "detail": "近一个月合并 PR 数量是上月的 3 倍，社区开发加速",
+          "source": "GitHub",
+          "sourceUrl": "https://github.com/iina/iina/pulse",
+          "impact": "medium"
+        }
+      ]
+    },
+    {
+      "name": "Infuse",
+      "platform": "Apple 生态",
+      "updates": [
+        {
+          "type": "feature",
+          "title": "智能字幕匹配 2.0",
+          "detail": "支持自动从 OpenSubtitles 和 Shooter 匹配字幕，新增 AI 翻译",
+          "source": "App Store 更新日志",
+          "sourceUrl": "https://apps.apple.com/app/infuse-7/id1136220934",
+          "impact": "high",
+          "images": [
+            { "url": "https://firecore.com/images/infuse-subtitle-2.png", "caption": "Infuse 字幕匹配 2.0 UI" }
+          ]
+        },
+        {
+          "type": "strategy",
+          "title": "订阅价格调整",
+          "detail": "年费从 $9.99 上调至 $14.99，终身买断价不变，推测在引导用户选择买断",
+          "source": "App Store",
+          "sourceUrl": "https://apps.apple.com/app/infuse-7/id1136220934",
+          "impact": "medium"
+        }
+      ]
+    },
+    {
+      "name": "MX Player",
+      "platform": "Android",
+      "updates": [
+        {
+          "type": "strategy",
+          "title": "广告频次增加引发用户不满",
+          "detail": "免费版视频播放前广告从 5 秒增至 15 秒，暂停时新增弹窗广告",
+          "source": "Google Play 评论",
+          "sourceUrl": "https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad",
+          "impact": "medium"
+        },
+        {
+          "type": "feature",
+          "title": "新增手势自定义功能",
+          "detail": "支持用户自定义滑动手势对应的操作（亮度/音量/进度/倍速）",
+          "source": "更新日志",
+          "sourceUrl": "https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad",
+          "impact": "low",
+          "images": [
+            { "url": "https://mxplayer.in/images/gesture-custom.png", "caption": "MX Player 手势自定义设置" }
+          ]
+        }
+      ]
+    }
+  ],
+  "appStoreReviews": {
+    "painPoints": [
+      {
+        "title": "MX Player 广告过于频繁",
+        "detail": "多位用户反馈免费版广告影响体验，甚至在暂停时弹出全屏广告，1星评价占比显著上升",
+        "app": "MX Player",
+        "platform": "Google Play",
+        "sourceUrl": "https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad&showAllReviews=true"
+      },
+      {
+        "title": "VLC iOS 版崩溃频繁",
+        "detail": "播放大于 10GB 的 4K 文件时经常闪退，内存管理存在问题",
+        "app": "VLC",
+        "platform": "App Store",
+        "sourceUrl": "https://apps.apple.com/app/vlc-media-player/id650377962?see-all=reviews"
+      },
+      {
+        "title": "Infuse 网络播放断连",
+        "detail": "通过 SMB 播放 NAS 上的文件时频繁缓冲中断，尤其在 Wi-Fi 6 环境下",
+        "app": "Infuse",
+        "platform": "App Store",
+        "sourceUrl": "https://apps.apple.com/app/infuse-7/id1136220934?see-all=reviews"
+      },
+      {
+        "title": "PotPlayer 界面过于复杂",
+        "detail": "新用户反馈设置项太多难以上手，希望有「简洁模式」",
+        "app": "PotPlayer",
+        "platform": "知乎讨论",
+        "sourceUrl": "https://www.zhihu.com/question/987654321"
+      }
+    ],
+    "highlights": [
+      {
+        "title": "Infuse 媒体库管理体验优秀",
+        "detail": "用户称赞自动刮削海报和元数据功能，「比 Plex 还省心」",
+        "app": "Infuse",
+        "platform": "App Store",
+        "sourceUrl": "https://apps.apple.com/app/infuse-7/id1136220934?see-all=reviews"
+      },
+      {
+        "title": "IINA 设计简洁",
+        "detail": "多位用户提到 IINA 是 macOS 上最符合系统设计语言的播放器",
+        "app": "IINA",
+        "platform": "App Store",
+        "sourceUrl": "https://apps.apple.com/app/iina/id1451844396?see-all=reviews"
+      },
+      {
+        "title": "VLC 格式兼容性无敌",
+        "detail": "用户反复提到「什么格式都能播」是选择 VLC 的首要原因",
+        "app": "VLC",
+        "platform": "多平台",
+        "sourceUrl": "https://apps.apple.com/app/vlc-media-player/id650377962?see-all=reviews"
+      }
+    ]
+  },
+  "hiringSignals": [
+    {
+      "company": "IINA",
+      "position": "高级 Swift/Metal 工程师",
+      "keywords": ["Metal", "HDR", "色彩管理", "macOS"],
+      "interpretation": "加强 macOS 原生渲染能力，可能为 HDR/杜比视界播放做准备",
+      "sourceUrl": "https://www.zhipin.com/job_detail/xxx"
+    },
+    {
+      "company": "迅雷影音",
+      "position": "AI 算法工程师",
+      "keywords": ["超分辨率", "帧插值", "视频增强"],
+      "interpretation": "布局 AI 视频增强功能，可能推出实时超分和补帧功能",
+      "sourceUrl": "https://www.zhipin.com/job_detail/yyy"
+    },
+    {
+      "company": "Infuse (Firecore)",
+      "position": "后端工程师",
+      "keywords": ["云同步", "订阅系统", "数据同步"],
+      "interpretation": "加强云服务能力，可能推出跨设备播放记录同步",
+      "sourceUrl": "https://www.zhipin.com/job_detail/zzz"
+    }
+  ],
+  "appMetrics": [
+    {
+      "name": "VLC",
+      "iosRating": 4.6,
+      "iosRatingCount": "12.3K",
+      "androidDownloads": "100M+",
+      "androidRating": 4.3,
+      "githubStars": 14200,
+      "weeklyCommits": 47,
+      "sourceUrl": "https://github.com/videolan/vlc"
+    },
+    {
+      "name": "IINA",
+      "iosRating": null,
+      "iosRatingCount": null,
+      "androidDownloads": null,
+      "androidRating": null,
+      "githubStars": 38500,
+      "weeklyCommits": 23,
+      "sourceUrl": "https://github.com/iina/iina"
+    },
+    {
+      "name": "MX Player",
+      "iosRating": null,
+      "iosRatingCount": null,
+      "androidDownloads": "500M+",
+      "androidRating": 4.0,
+      "githubStars": null,
+      "weeklyCommits": null,
+      "sourceUrl": "https://play.google.com/store/apps/details?id=com.mxtech.videoplayer.ad"
+    },
+    {
+      "name": "Infuse",
+      "iosRating": 4.8,
+      "iosRatingCount": "5.2K",
+      "androidDownloads": null,
+      "androidRating": null,
+      "githubStars": null,
+      "weeklyCommits": null,
+      "sourceUrl": "https://apps.apple.com/app/infuse-7/id1136220934"
+    },
+    {
+      "name": "KMPlayer",
+      "iosRating": null,
+      "iosRatingCount": null,
+      "androidDownloads": "100M+",
+      "androidRating": 4.1,
+      "githubStars": null,
+      "weeklyCommits": null,
+      "sourceUrl": "https://play.google.com/store/apps/details?id=com.kmplayer"
+    },
+    {
+      "name": "mpv",
+      "iosRating": null,
+      "iosRatingCount": null,
+      "androidDownloads": null,
+      "androidRating": null,
+      "githubStars": 29800,
+      "weeklyCommits": 31,
+      "sourceUrl": "https://github.com/mpv-player/mpv"
+    }
+  ]
+}

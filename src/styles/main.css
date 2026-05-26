@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .sidebar-link {
+    @apply block px-3 py-2.5 rounded-lg text-sm transition-all duration-150;
+  }
+  .sidebar-link:hover {
+    @apply bg-slate-100;
+  }
+  .sidebar-link.active {
+    @apply bg-indigo-50 text-indigo-700 font-medium shadow-sm border border-indigo-100;
+  }
+
+  .insight-card {
+    @apply rounded-xl border p-5 transition-all duration-200 hover:shadow-md hover:-translate-y-0.5;
+  }
+
+  .section-title {
+    @apply text-lg font-semibold text-slate-800 flex items-center gap-2;
+  }
+
+  .competitor-card {
+    @apply bg-white rounded-xl border border-slate-200 p-5 transition-all duration-200 hover:shadow-lg hover:border-slate-300;
+  }
+
+  .data-badge {
+    @apply inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full font-medium;
+  }
+
+  .stat-card {
+    @apply bg-white rounded-xl border border-slate-200 p-5 text-center transition-all hover:shadow-md;
+  }
+}
