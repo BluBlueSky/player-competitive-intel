@@ -11,7 +11,6 @@ const TRACKED_APPS: AppStoreApp[] = [
   { name: 'Infuse', iosId: '1136220934' },
   { name: 'MX Player', androidPackage: 'com.mxtech.videoplayer.ad' },
   { name: 'nPlayer', iosId: '1116905928' },
-  { name: 'IINA', iosId: '' }, // macOS only, no iOS
   { name: 'KMPlayer', androidPackage: 'com.kmplayer' }
 ]
 
@@ -71,29 +70,54 @@ async function fetchiOSReviews(appId: string, appName: string): Promise<ReviewDa
       date: entry.updated?.label || '',
       author: entry.author?.name?.label || ''
     }))
-    // Prioritize low-rating reviews (1-3 stars)
+    // Prioritize low-rating reviews (1-3 stars) for pain point analysis
     .sort((a: any, b: any) => a.rating - b.rating)
 
   return {
     app: appName,
     platform: 'App Store (CN)',
     sourceUrl: `https://apps.apple.com/cn/app/id${appId}?see-all=reviews`,
-    reviews: reviews.slice(0, 20)
+    reviews: reviews.slice(0, 25)
   }
 }
 
 async function fetchGooglePlayReviews(packageName: string, appName: string): Promise<ReviewData> {
-  // Google Play doesn't have a public API for reviews.
-  // Options: use google-play-scraper npm package, or SerpApi.
-  // Here we use a simplified approach via the web.
-  // In production, consider using the google-play-scraper package.
+  // Use google-play-scraper for real reviews
+  try {
+    const gplay = await import('google-play-scraper')
+    const reviews = await gplay.default.reviews({
+      appId: packageName,
+      lang: 'zh',
+      country: 'cn',
+      sort: gplay.default.sort.NEWEST,
+      num: 30
+    })
 
-  console.log(`[app-store] Google Play scraping for ${packageName} - requires google-play-scraper package`)
+    const formattedReviews = reviews.data
+      .map((r: any) => ({
+        rating: r.score || 0,
+        title: '',
+        content: (r.text || '').slice(0, 300),
+        date: r.date || '',
+        author: r.userName || ''
+      }))
+      // Prioritize low-rating reviews
+      .sort((a: any, b: any) => a.rating - b.rating)
 
-  return {
-    app: appName,
-    platform: 'Google Play',
-    sourceUrl: `https://play.google.com/store/apps/details?id=${packageName}&showAllReviews=true`,
-    reviews: []
+    return {
+      app: appName,
+      platform: 'Google Play',
+      sourceUrl: `https://play.google.com/store/apps/details?id=${packageName}&showAllReviews=true`,
+      reviews: formattedReviews.slice(0, 25)
+    }
+  } catch (err) {
+    console.warn(`[app-store] google-play-scraper failed for ${appName}, trying fallback:`, err)
+    // Fallback: return empty if scraper not available
+    return {
+      app: appName,
+      platform: 'Google Play',
+      sourceUrl: `https://play.google.com/store/apps/details?id=${packageName}&showAllReviews=true`,
+      reviews: []
+    }
   }
 }
