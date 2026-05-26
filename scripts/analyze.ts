@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 import { resolve } from 'path'
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 
 const REPORT_PROMPT = `你是一位资深的产品竞品分析师，专注于视频播放器领域。请根据以下采集的原始数据，生成一份结构化的竞品周报。
 
@@ -99,17 +99,20 @@ async function main() {
   const rawData = readFileSync(rawDataPath, 'utf-8')
   console.log(`[analyze] Loaded raw data (${rawData.length} bytes)`)
 
-  const apiKey = process.env.ANTHROPIC_API_KEY
+  const apiKey = process.env.DEEPSEEK_API_KEY
   if (!apiKey) {
-    console.error('[analyze] ANTHROPIC_API_KEY not set')
+    console.error('[analyze] DEEPSEEK_API_KEY not set')
     process.exit(1)
   }
 
-  const client = new Anthropic({ apiKey })
+  const client = new OpenAI({
+    baseURL: 'https://api.deepseek.com',
+    apiKey
+  })
 
-  console.log('[analyze] Calling Claude API for analysis...')
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+  console.log('[analyze] Calling DeepSeek API for analysis...')
+  const response = await client.chat.completions.create({
+    model: 'deepseek-chat',
     max_tokens: 8000,
     messages: [
       {
@@ -119,23 +122,23 @@ async function main() {
     ]
   })
 
-  const textContent = response.content.find(c => c.type === 'text')
-  if (!textContent || textContent.type !== 'text') {
-    console.error('[analyze] No text response from Claude')
+  const text = response.choices[0]?.message?.content
+  if (!text) {
+    console.error('[analyze] No response from DeepSeek')
     process.exit(1)
   }
 
   let report: any
   try {
-    report = JSON.parse(textContent.text)
+    report = JSON.parse(text)
   } catch {
     // Try to extract JSON from the response
-    const jsonMatch = textContent.text.match(/\{[\s\S]*\}/)
+    const jsonMatch = text.match(/\{[\s\S]*\}/)
     if (jsonMatch) {
       report = JSON.parse(jsonMatch[0])
     } else {
-      console.error('[analyze] Failed to parse Claude response as JSON')
-      console.error(textContent.text.slice(0, 500))
+      console.error('[analyze] Failed to parse response as JSON')
+      console.error(text.slice(0, 500))
       process.exit(1)
     }
   }

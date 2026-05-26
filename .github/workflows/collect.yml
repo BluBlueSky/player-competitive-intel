@@ -17,18 +17,17 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
-      - run: npm ci
+      - run: npm install
 
       - name: Run data collectors
         run: npm run collect
 
-      - name: Analyze with Claude API
+      - name: Analyze with DeepSeek API
         run: npm run analyze
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
 
       - name: Commit and push report
         run: |
