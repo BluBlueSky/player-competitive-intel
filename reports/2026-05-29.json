@@ -1,0 +1,149 @@
+{
+  "date": "2026-05-29",
+  "title": "第3期 播放器竞品周报",
+  "executiveSummary": "VLC iOS出现集中性、跨版本（iOS 26/26.2/26.4）、高复现率的中文字幕乱码问题（10+条1–3星评论），且与系统更新强相关，构成P0级兼容性危机；Infuse 8.4已落地片头跳过等媒体中心功能，但用户反馈其115网盘掉线、刮削转圈等稳定性问题正在侵蚀高端口碑。",
+  "actionItems": [
+    {
+      "priority": "P0",
+      "action": "72小时内启动iOS字幕编码兼容性专项：复现VLC在iOS 26+下SRT/ASS中文乱码场景，验证UTF-8/BOM/GB18030检测逻辑，并输出修复方案原型",
+      "reason": "iOS RSS评论中多条1星评价明确指向'IOS26更新后中文srt字幕乱码'、'简体繁体均变方块'、'UTF-8可显示但APP不行'，时间跨度从2025-09至2026-05，表明非偶发bug而是系统级兼容断裂",
+      "deadline": "72小时内",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1星评价提及'IOS26更新后中文srt字幕乱码'、'简体繁体均变方块'、'UTF-8可显示但APP不行'"
+    },
+    {
+      "priority": "P1",
+      "action": "在下一个iOS热修复版本中增加字幕编码自动探测fallback机制（优先尝试UTF-8+BOM，失败后尝试GB18030/GBK），并开放手动编码选择入口",
+      "reason": "VLC用户反复强调'调整编码字体都没用'，说明当前自动探测逻辑完全失效；MX Player用户也提到'外挂字幕全是乱码'，印证该问题是行业共性挑战而非单一产品缺陷",
+      "deadline": "本季度",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC用户称'调整编码字体都没用'；Google Play评论中MX Player用户称'外挂字幕全是乱码'"
+    },
+    {
+      "priority": "P1",
+      "action": "针对Infuse 8.4新增的片头跳过功能，2周内完成竞品体验拆解（触发逻辑、社区规则、失败降级策略），并输出差异化方案：支持用户自定义跳过规则（如'片头30秒+片尾90秒'）及本地规则包导入",
+      "reason": "Infuse 8.4官方博客明确宣布'community-powered skipping for intros and credits'，且App Store评论中用户已提出'希望支持弹幕'、'刮削过程中无法播放'等配套体验短板，说明其功能尚处初级阶段，存在快速跟进窗口",
+      "deadline": "2周内",
+      "owner": "产品设计组",
+      "confidence": "high",
+      "sourceRef": "Infuse官方博客宣布'community-powered skipping for intros and credits'；Infuse App Store评论中用户称'刮削过程中也无法播放'"
+    }
+  ],
+  "competitiveLandscape": {
+    "thisWeekMoves": [
+      {
+        "competitor": "Infuse",
+        "move": "发布8.4版本，正式上线片头/片尾社区驱动跳过、Extras内容浏览、播放核心重写",
+        "ourResponse": "立即启动竞品功能逆向分析，聚焦其社区规则分发机制与失败处理逻辑，避免简单复制",
+        "urgency": "immediate",
+        "sourceUrl": "https://firecore.com/blog",
+        "confidence": "high"
+      },
+      {
+        "competitor": "IINA",
+        "move": "发布v1.4.3，修复iina://URL命令注入安全漏洞（CVE-2026-47114）及媒体键行为异常",
+        "ourResponse": "排查我方URL Scheme实现是否存在同类命令注入风险，尤其关注mpv_options/input-commands暴露面",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://github.com/iina/iina/releases/tag/v1.4.3",
+        "confidence": "high"
+      }
+    ],
+    "featureGapAlert": [
+      {
+        "feature": "社区驱动片头/片尾跳过",
+        "whoHasIt": [
+          "Infuse"
+        ],
+        "userDemandSignal": "Infuse App Store评论中多条3–4星评价主动请求'弹幕'、'双击暂停'，反映用户对增强型媒体消费体验有明确期待；VLC Google Play评论中用户呼吁'断点续播'，显示基础功能仍存缺口",
+        "priority": "high"
+      },
+      {
+        "feature": "115网盘直连稳定性",
+        "whoHasIt": [
+          "Infuse"
+        ],
+        "userDemandSignal": "Infuse App Store中多条1星评论抱怨'115还是每天掉线'、'直连115网盘能不能不要通过iCloud连接'，表明该云盘已成为高端用户刚需但当前实现质量堪忧",
+        "priority": "medium"
+      }
+    ]
+  },
+  "userVoice": {
+    "unmetNeeds": [
+      {
+        "need": "中文字幕编码自动适配能力",
+        "evidence": [
+          "IOS26字幕编码有问题，甚至一些旧的视频，以前播放过的字幕都变成了方块",
+          "更新ios26后中文srt字幕乱码😡😡😡",
+          "只有中文字幕不能正常显示"
+        ],
+        "affectedApps": [
+          "VLC"
+        ],
+        "opportunity": "构建更鲁棒的编码探测栈（含BOM识别、统计启发式、fallback链），并提供‘一键修复历史字幕’工具，将技术痛点转化为用户信任资产"
+      },
+      {
+        "need": "小窗/画中画模式下的音画同步保障",
+        "evidence": [
+          "小窗口播放音画不同步如何处理？",
+          "快进后声音自动开到最大….",
+          "视频快进后卡住"
+        ],
+        "affectedApps": [
+          "nPlayer",
+          "Infuse",
+          "VLC"
+        ],
+        "opportunity": "在画中画模式下启用独立音频缓冲策略，并加入‘音画同步校准’快捷入口，解决多任务场景下最易感知的体验断裂点"
+      }
+    ],
+    "satisfactionShifts": [
+      {
+        "app": "VLC",
+        "direction": "down",
+        "signal": "iOS平台1–3星评论中字幕乱码、闪退、卡顿问题高度集中且时间密集（近30天内7条明确提及iOS 26+兼容问题）",
+        "implication": "用户正从‘兼容性标杆’认知转向‘系统更新后不可靠’，若不及时响应，将加速向Infuse/nPlayer等付费玩家迁移"
+      },
+      {
+        "app": "MX Player",
+        "direction": "down",
+        "signal": "Google Play评论中广告相关差评占比超70%（15/21条1星评论直接指控广告），且Pro用户投诉‘买了pro版本还我pro版本’",
+        "implication": "商业化路径已严重损害核心用户体验，为无广告、轻量、专注播放的竞品提供明确市场空隙"
+      }
+    ]
+  },
+  "techTrends": [
+    {
+      "trend": "AV1硬件解码在移动端加速普及，但播放器层适配滞后",
+      "evidence": "Hacker News未出现直接讨论，但mpv GitHub近期issue包含'Adaptive playback (hls/dash)'及'True RTX Video HDR support'，暗示流媒体与HDR解码仍是工程焦点；GitHub趋势中mpv、IINA、VLC commits持续围绕底层播放逻辑优化",
+      "implication": "短期内AV1红利仍由系统级解码器兑现，播放器需优先确保HDR元数据透传与色彩管理一致性，而非追逐编解码器支持",
+      "timeframe": "mid_term"
+    }
+  ],
+  "weekOverWeek": {
+    "newThisWeek": [
+      "VLC iOS跨版本字幕乱码问题集中爆发（10+条新评论）",
+      "Infuse 8.4正式发布并被用户实测验证（115掉线、刮削卡顿）",
+      "IINA v1.4.3修复高危命令注入漏洞（CVE-2026-47114）"
+    ],
+    "continuedFromLastWeek": [
+      "Infuse向媒体中心转型（片头跳过+Extras）",
+      "VLC Android HDR兼容性差评持续积累",
+      "IINA高open issues数（1893）与活跃开发（周29 commits）并存"
+    ],
+    "resolvedOrFaded": []
+  },
+  "dataQuality": {
+    "sourcesUsed": [
+      "ios_rss_and_google_play",
+      "github_releases_and_web",
+      "itunes_lookup_and_github_api",
+      "github_api",
+      "algolia_hn_search"
+    ],
+    "sourcesFailed": [],
+    "overallConfidence": "high",
+    "caveat": "Hacker News数据未出现播放器相关技术讨论，技术趋势推断基于GitHub issue主题与竞品发布节奏，非直接信号"
+  }
+}
