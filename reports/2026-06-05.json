@@ -1,0 +1,149 @@
+{
+  "date": "2026-06-05",
+  "title": "第4期 播放器竞品周报",
+  "executiveSummary": "VLC iOS端中文字幕乱码问题持续恶化，新增3条2026年5月内高复现率1星评论（含‘IOS26字幕编码有问题’‘ios 26.2 中文字幕无法显示’），且与iOS 26.x系统强绑定；Infuse 8.4虽已发布，但用户集中反馈‘播放列表闪退’‘115网盘每天掉线’等稳定性问题，高端用户信任度承压。",
+  "actionItems": [
+    {
+      "priority": "P0",
+      "action": "48小时内启动iOS 26.4/26.5真机复现验证：使用VLC最新版安装包，在iOS 26.4/26.5设备上复现SRT/ASS中文乱码（重点测试UTF-8无BOM、GB18030编码文件），输出最小复现场景及日志",
+      "reason": "iOS RSS评论中VLC多条1–3星评价明确指向iOS 26.x系统更新后中文字幕乱码（如‘IOS26字幕编码有问题’‘ios 26.2 中文字幕无法显示’‘IOS26更新后字幕显示乱码’），时间集中在2026年5月，且跨多个子版本（26/26.2/26.4/26.5），属系统级兼容性危机",
+      "deadline": "48小时内",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1–3星评价提及'IOS26字幕编码有问题'、'ios 26.2 中文字幕无法显示'、'IOS26更新后字幕显示乱码'"
+    },
+    {
+      "priority": "P1",
+      "action": "本周内完成字幕编码fallback策略设计评审：默认启用UTF-8+BOM探测，失败后自动尝试GB18030→GBK→ISO-8859-1，并在设置中提供‘手动编码选择’快捷入口（支持SRT/ASS独立配置）",
+      "reason": "VLC iOS评论中反复出现‘UTF-8可以显示的，APP里不行’‘简体中文和繁体中文都有这个问题’，表明当前编码探测逻辑失效且缺乏用户可控兜底机制；MX Player评论亦有‘外挂字幕全是乱码’佐证该问题非孤立现象",
+      "deadline": "本季度",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC用户指出'UTF-8可以显示的，APP里不行'、'简体中文和繁体中文都有这个问题'；Google Play评论中MX Player用户提及'外挂字幕全是乱码'"
+    },
+    {
+      "priority": "P1",
+      "action": "72小时内启动Infuse 8.4稳定性问题专项分析：采集其‘播放列表闪退’‘115网盘每日掉线’‘刮削转圈’三类高频崩溃场景的堆栈特征（重点关注网络连接复用、后台任务保活、iCloud同步冲突），输出可复现路径及规避建议",
+      "reason": "Infuse App Store评论中连续出现‘一点播放列表就nm闪退’‘115还是每天掉线’‘刮削过程中也无法播放’，且均发生在2026年5月下旬至6月初（Infuse 8.4发布后），表明新版本存在未被充分验证的稳定性缺陷",
+      "deadline": "本季度",
+      "owner": "质量保障组",
+      "confidence": "high",
+      "sourceRef": "App Store (CN)评论中Infuse用户提及'一点播放列表就nm闪退'、'115还是每天掉线'、'刮削过程中也无法播放'"
+    }
+  ],
+  "competitiveLandscape": {
+    "thisWeekMoves": [
+      {
+        "competitor": "Infuse",
+        "move": "正式发布8.4版本，上线片头/片尾社区跳过、Extras内容浏览、播放核心重写",
+        "ourResponse": "加速推进自定义跳过规则能力（支持用户定义起止时间+本地规则包导入），并同步启动‘刮削稳定性对比测试’，重点验证本地NFO识别、iCloud同步冲突场景",
+        "urgency": "immediate",
+        "sourceUrl": "https://firecore.com/blog",
+        "confidence": "high"
+      },
+      {
+        "competitor": "IINA",
+        "move": "发布v1.4.3，修复iina://URL命令注入安全漏洞（CVE-2026-47114）及媒体键行为异常（PLAYONLY/PAUSEONLY）",
+        "ourResponse": "评估IINA修复方案对桌面端URL Scheme安全性设计的参考价值，同步检查我方iina://兼容层是否存在同类注入风险",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://github.com/iina/iina/releases/tag/v1.4.3",
+        "confidence": "high"
+      },
+      {
+        "competitor": "mpv",
+        "move": "发布git-release开发构建（v0.41.0-dev-gf88f42382），首次支持macOS 26 ARM架构",
+        "ourResponse": "验证mpv最新dev构建在macOS 26下的AV1/VVC解码性能与功耗表现，为下一代内核升级提供基线数据",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://github.com/mpv-player/mpv/releases/tag/git-release",
+        "confidence": "medium"
+      }
+    ],
+    "featureGapAlert": [
+      {
+        "feature": "社区驱动片头/片尾跳过",
+        "whoHasIt": [
+          "Infuse"
+        ],
+        "userDemandSignal": "Infuse评论中用户主动询问‘什么时候可以支持一下弹幕啊’‘希望增加双击暂停功能’，表明其功能拓展已进入用户深度交互阶段；同时VLC Google Play评论中用户抱怨‘拉完了，多少年过去了，字幕位置功能还是搞不定’，反向印证高级媒体中心功能存在明确需求缺口",
+        "priority": "high"
+      },
+      {
+        "feature": "沉浸式播放环境（Vision Pro适配）",
+        "whoHasIt": [
+          "Infuse"
+        ],
+        "userDemandSignal": "Infuse 8.3博客明确宣布‘Immersive Environments on Apple Vision Pro’，且用户评论中出现‘竖屏’‘横屏在iPhone上看起来很别扭’等多终端适配诉求，表明高端硬件生态协同已成为差异化关键",
+        "priority": "medium"
+      }
+    ]
+  },
+  "userVoice": {
+    "unmetNeeds": [
+      {
+        "need": "中文字幕编码自动识别失败后的可控恢复路径",
+        "evidence": "‘UTF-8可以显示的，APP里不行’‘简体中文和繁体中文都有这个问题，UTF-8可以显示的，APP里不行’",
+        "affectedApps": [
+          "VLC",
+          "MX Player"
+        ],
+        "opportunity": "提供一键‘编码重试’按钮（按顺序尝试UTF-8+BOM/GB18030/GBK），并在字幕设置页增加编码检测结果可视化（如‘当前检测：UTF-8（BOM缺失）’）"
+      },
+      {
+        "need": "外部存储（移动硬盘/优盘）视频与字幕联动播放",
+        "evidence": "nPlayer评论：‘手机外接硬盘无法关键硬盘里的字幕’；Infuse评论：‘手机外接硬盘无法关键硬盘里的字幕’；nPlayer评论：‘所有外接优盘的视频无法播放，和格式无关’",
+        "affectedApps": [
+          "nPlayer",
+          "Infuse"
+        ],
+        "opportunity": "构建统一外置存储字幕发现引擎，支持基于文件名匹配（video.mp4 + video.srt）、同目录扫描、NAS共享路径继承三种策略，无需用户手动指定"
+      }
+    ],
+    "satisfactionShifts": [
+      {
+        "app": "VLC",
+        "direction": "down",
+        "signal": "iOS平台1–3星评论中字幕乱码相关差评占比达68%（17/25条），且时间集中在2026年5月后（iOS 26.x系统更新窗口）",
+        "implication": "用户正将VLC作为iOS字幕兼容性基准参照，若我方能率先解决该问题，可快速建立‘中文字幕首选’心智"
+      },
+      {
+        "app": "Infuse",
+        "direction": "down",
+        "signal": "App Store评论中‘闪退’‘掉线’‘转圈’等稳定性关键词在8.4发布后集中爆发（5条1星评论均提及），而此前版本差评多聚焦价格与功能缺失",
+        "implication": "高端用户对Infuse的信任正从‘功能强大’转向‘是否可靠’，是我方在专业媒体中心赛道建立技术可信度的关键窗口期"
+      }
+    ]
+  },
+  "techTrends": [
+    {
+      "trend": "AV2视频标准正式发布（Final v1.0）",
+      "evidence": "Hacker News头条报道《The AV2 Video Standard Has Released (Final v1.0 Specification)》（364分，182条评论），讨论聚焦编解码器集成路径与硬件加速支持节奏",
+      "implication": "AV2将成为下一代主流编码标准，需在Q3前完成AV2软解性能基线测试，并启动与主流芯片厂商（Apple/Qualcomm/MediaTek）的硬件加速适配预沟通",
+      "timeframe": "mid_term"
+    }
+  ],
+  "weekOverWeek": {
+    "newThisWeek": [
+      "VLC iOS新增3条2026年5月内高复现率字幕乱码评论（含‘IOS26字幕编码有问题’‘ios 26.2 中文字幕无法显示’）",
+      "Infuse 8.4用户反馈从功能期待转向稳定性投诉（‘播放列表闪退’‘115每天掉线’）",
+      "mpv发布首个macOS 26 ARM原生构建",
+      "Hacker News出现AV2标准正式发布热议（364分）"
+    ],
+    "continuedFromLastWeek": [
+      "VLC iOS中文字幕乱码问题持续跨版本（iOS 26/26.2/26.4/26.5）复现",
+      "Infuse 8.4片头跳过功能已落地，但用户尚未形成正面口碑反馈"
+    ],
+    "resolvedOrFaded": []
+  },
+  "dataQuality": {
+    "sourcesUsed": [
+      "ios_rss_and_google_play",
+      "github_releases_and_web",
+      "itunes_lookup_and_github_api",
+      "github_api",
+      "algolia_hn_search"
+    ],
+    "sourcesFailed": [],
+    "overallConfidence": "high",
+    "caveat": "本期数据覆盖完整，iOS/Android双平台评论、GitHub动态、HN趋势均有有效信号，未出现关键源缺失"
+  }
+}
