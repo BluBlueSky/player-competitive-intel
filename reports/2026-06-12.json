@@ -1,0 +1,124 @@
+{
+  "date": "2026-06-12",
+  "title": "第5期 播放器竞品周报",
+  "executiveSummary": "VLC iOS端中文字幕乱码问题持续爆发，新增7条2026年5–6月高复现率差评（含‘IOS26字幕编码有问题’‘ios 26.2 中文字幕无法显示’等明确系统版本绑定），且已扩散至Google Play；Infuse 8.4虽上线关键功能，但用户集中反馈‘播放列表闪退’‘115网盘每日掉线’及‘刮削转圈’三大稳定性缺陷，高端付费用户信任风险升级。",
+  "actionItems": [
+    {
+      "priority": "P0",
+      "action": "48小时内完成VLC iOS字幕乱码真机复现闭环：在iOS 26.4/26.5设备上使用VLC最新App Store版本，复现SRT/ASS中文乱码（重点验证UTF-8无BOM、GB18030文件），输出最小复现场景、日志及可提交至VLC GitHub的复现报告",
+      "reason": "iOS RSS评论中多条1星评价明确指向‘IOS26字幕编码有问题’‘ios 26.2 中文字幕无法显示’‘更新ios26后中文srt字幕乱码’，且时间集中在2026年5–6月，表明该问题与iOS 26.x强相关并持续恶化",
+      "deadline": "2天内",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1星评价提及'IOS26字幕编码有问题'、'ios 26.2 中文字幕无法显示'、'更新ios26后中文srt字幕乱码'"
+    },
+    {
+      "priority": "P1",
+      "action": "本周内启动字幕编码fallback策略设计：默认启用UTF-8+BOM探测，失败后自动尝试GB18030→GBK→ISO-8859-1，并在设置中提供‘手动编码选择’快捷入口（支持SRT/ASS独立配置）",
+      "reason": "VLC iOS评论中高频出现‘中文srt字幕乱码’‘中文字幕变成方块’‘UTF-8可以显示的，APP里不行’等描述，表明当前编码探测逻辑失效，且用户已尝试手动调整编码无效",
+      "deadline": "本季度",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1星评价提及'中文srt字幕乱码'、'中文字幕变成方块'、'UTF-8可以显示的，APP里不行'"
+    },
+    {
+      "priority": "P1",
+      "action": "72小时内启动Infuse 8.4稳定性专项诊断：聚焦‘播放列表闪退’（来源：App Store 2026-04-28‘一点播放列表就nm闪退’）、‘115网盘每日掉线’（来源：App Store 2026-05-26‘新版本一样，还是每天掉线’）、‘刮削转圈无法播放’（来源：App Store 2026-05-14‘你明明刮削好了，起播还转圈’）三类高频崩溃场景，采集堆栈特征并输出规避建议",
+      "reason": "Infuse App Store评论中上述三类问题重复出现且时间集中（2026-04至2026-06），用户明确归因于8.4版本，构成高端付费用户信任危机信号",
+      "deadline": "本季度",
+      "owner": "质量保障组",
+      "confidence": "high",
+      "sourceRef": "App Store评论中Infuse多条1星评价提及'一点播放列表就nm闪退'、'新版本一样，还是每天掉线'、'你明明刮削好了，起播还转圈'"
+    }
+  ],
+  "competitiveLandscape": {
+    "thisWeekMoves": [
+      {
+        "competitor": "Infuse",
+        "move": "发布8.4版本，新增Extras内容浏览、社区驱动的片头/片尾跳过、Home Screen Favorites及播放核心重写",
+        "ourResponse": "将Infuse 8.4 Extras机制作为元数据增强能力对标点，优先评估本地NFO兼容性优化路径（参考其‘无法识别电视剧的本地nfo数据’差评）",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://firecore.com/blog",
+        "confidence": "high"
+      }
+    ],
+    "featureGapAlert": [
+      {
+        "feature": "投屏功能",
+        "whoHasIt": [
+          "MX Player",
+          "VLC"
+        ],
+        "userDemandSignal": "VLC Google Play评论中多条1星评价提及‘连个投屏功能都没有’‘投屏功能无法使用’‘怎么投屏？’，且2026-06-10仍有新增差评",
+        "priority": "high"
+      },
+      {
+        "feature": "歌词显示（音乐场景）",
+        "whoHasIt": [],
+        "userDemandSignal": "VLC Google Play评论中多条1星评价明确要求‘加入歌词展示功能’‘没有歌词显示啊’，并指出‘论坛上七八年前就有人提出’，属长期未满足需求",
+        "priority": "medium"
+      }
+    ]
+  },
+  "userVoice": {
+    "unmetNeeds": [
+      {
+        "need": "中文字幕编码自动适配能力缺失",
+        "evidence": "VLC iOS评论：‘UTF-8可以显示的，APP里不行’、‘IOS26字幕编码有问题’、‘更新ios26后中文srt字幕乱码😡😡😡’",
+        "affectedApps": [
+          "VLC"
+        ],
+        "opportunity": "我们可构建智能编码探测引擎（基于BOM+首行采样+统计特征），并在设置中提供‘一键修复乱码’快捷按钮，形成差异化体验"
+      },
+      {
+        "need": "隐私敏感型本地视频加密存储",
+        "evidence": "nPlayer iOS评论：‘应用采用开放式文件存储（Documents目录明文可读），缺乏基础的加密机制……建议增加可选的本地加密存储或隐私模式’",
+        "affectedApps": [
+          "nPlayer"
+        ],
+        "opportunity": "推出‘隐私保险箱’模式：支持AES-256本地加密+指纹/面容解锁，仅解密后才加载媒体库，填补高端用户安全空白"
+      }
+    ],
+    "satisfactionShifts": [
+      {
+        "app": "VLC",
+        "direction": "down",
+        "signal": "iOS平台2026年5–6月新增7条1星字幕乱码差评，Google Play亦出现‘字幕位置功能还是搞不定’等延续性差评",
+        "implication": "字幕问题是当前最大体验断点，直接影响基础播放信任度，需优先修复"
+      },
+      {
+        "app": "Infuse",
+        "direction": "down",
+        "signal": "App Store评论中‘播放列表闪退’‘115网盘每天掉线’‘刮削转圈’三类问题在2026-04至2026-06持续出现，且与8.4版本强关联",
+        "implication": "新版本引入稳定性倒退，高端付费用户流失风险上升，需警惕其Pro订阅续费率下滑"
+      }
+    ]
+  },
+  "techTrends": [],
+  "weekOverWeek": {
+    "newThisWeek": [
+      "VLC Google Play新增‘投屏功能无法使用’‘连个投屏功能都没有’等明确功能缺失差评",
+      "Infuse App Store新增‘快进后声音自动开到最大’（2026-05-16）及‘无法识别电视剧的本地nfo文件’（2026-05-10）等新痛点",
+      "MX Player Google Play集中爆发广告相关差评（2026-06-10至2026-06-02共6条），且出现‘买了pro版本 还我pro版本’等信任危机表述"
+    ],
+    "continuedFromLastWeek": [
+      "VLC iOS中文字幕乱码问题持续恶化（新增2026-06-09、2026-06-10差评）",
+      "Infuse 8.4‘播放列表闪退’‘115网盘每天掉线’问题仍在持续（2026-06-08、2026-06-09新增）",
+      "nPlayer iOS‘iOS26不能正常使用’‘外接优盘视频无法播放’等系统兼容性问题未见缓解"
+    ],
+    "resolvedOrFaded": []
+  },
+  "dataQuality": {
+    "sourcesUsed": [
+      "ios_rss_and_google_play",
+      "github_releases_and_web",
+      "itunes_lookup_and_github_api",
+      "algolia_hn_search"
+    ],
+    "sourcesFailed": [
+      "github_api"
+    ],
+    "overallConfidence": "high",
+    "caveat": "GitHub趋势数据为空，技术演进信号主要依赖Hacker News和竞品官网，AV1/VVC/AI字幕等底层技术动向未获直接证据"
+  }
+}
