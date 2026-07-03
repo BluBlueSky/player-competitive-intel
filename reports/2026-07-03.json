@@ -1,0 +1,152 @@
+{
+  "date": "2026-07-03",
+  "title": "第7期 播放器竞品周报",
+  "executiveSummary": "VLC iOS端中文字幕乱码问题持续爆发，本周新增8条明确指向iOS 26.x（含26.2/26.4/26.5）的1–3星差评，且首次在Google Play出现跨平台同步反馈；Infuse 8.4稳定性问题未收敛，App Store新增5条‘闪退’相关差评（含Mac端暂停功能失效、Apple TV同步崩溃等新场景），并出现用户因‘强制收费’和‘本地视频播放跳转付费页’发起信任危机。",
+  "actionItems": [
+    {
+      "priority": "P0",
+      "action": "48小时内完成VLC iOS 26.5真机复现闭环：使用App Store最新VLC（v4.0.2），在iPhone 17 Pro（iOS 26.5）上复现中文SRT字幕乱码（重点验证UTF-8无BOM文件及简繁体混合场景），输出最小复现场景、控制台日志及可提交至VLC GitHub的复现报告",
+      "reason": "iOS RSS评论中多条1星评价明确指向'IOS26更新后字幕显示乱码'、'ios 26.2 中文字幕无法显示'、'IOS26字幕编码有问题'，且时间集中在2026-01至2026-06，表明非偶发问题；Google Play亦出现'中文srt字幕乱码😡😡😡'同步反馈",
+      "deadline": "48小时内",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1星评价提及'IOS26更新后字幕显示乱码'、'ios 26.2 中文字幕无法显示'；Google Play评论中VLC用户称'中文srt字幕乱码😡😡😡'"
+    },
+    {
+      "priority": "P1",
+      "action": "本周内启动字幕编码fallback策略设计：默认启用UTF-8+BOM探测，失败后自动尝试GB18030→GBK→ISO-8859-1，并在设置中提供‘手动编码选择’快捷入口（支持SRT/ASS独立配置）",
+      "reason": "VLC iOS差评中高频出现'中文srt字幕乱码'、'中文字幕变成方块'、'UTF-8可以显示的，APP里不行'等描述，表明当前编码探测逻辑存在系统性缺陷；用户已多次强调'调整编码字体都没用'，说明需更鲁棒的fallback机制",
+      "deadline": "本季度",
+      "owner": "播放内核组",
+      "confidence": "high",
+      "sourceRef": "iOS RSS评论中VLC多条1星评价提及'中文srt字幕乱码'、'中文字幕变成方块'、'UTF-8可以显示的，APP里不行'"
+    },
+    {
+      "priority": "P1",
+      "action": "72小时内启动Infuse 8.4稳定性专项诊断：聚焦‘播放列表闪退’（来源：App Store 2026-04-28）、‘Mac端暂停功能无法正常使用’（来源：App Store 2026-06-22）、‘Pro用户强制跳转付费页’（来源：App Store 2026-06-06）三类高频崩溃与信任流失场景，采集堆栈特征并输出规避建议",
+      "reason": "Infuse App Store评论中新增5条闪退相关差评，其中2条为新场景（Mac端暂停失效、Apple TV同步崩溃），1条为商业化信任危机（'强制收费了？自己导入的视频不让播放了，一点开视频就是付费页面'），表明8.4版本质量风险已从功能层扩散至基础可用性与商业模型层",
+      "deadline": "72小时内",
+      "owner": "质量保障组 & 商业化产品组",
+      "confidence": "high",
+      "sourceRef": "App Store评论中Infuse多条1星评价提及'Mac端的视频暂停功能无法正常使用'、'一点播放列表就nm闪退'、'强制收费了？自己导入的视频不让播放了，一点开视频就是付费页面'"
+    }
+  ],
+  "competitiveLandscape": {
+    "thisWeekMoves": [
+      {
+        "competitor": "IINA",
+        "move": "发布v1.4.4版本，修复iina:// URL scheme命令注入漏洞，增加全面防护以阻止本地文件修改路径",
+        "ourResponse": "评估该安全加固方案是否可复用于我方URL Scheme设计，尤其关注其对自定义协议扩展的兼容性影响",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://github.com/iina/iina/releases/tag/v1.4.4",
+        "confidence": "high"
+      },
+      {
+        "competitor": "mpv",
+        "move": "发布git-release开发构建（v0.41.0-854-g7aa8580ca），首次支持macOS 26 ARM架构",
+        "ourResponse": "确认我方macOS版是否已适配macOS 26 ARM，若未适配，启动紧急兼容性验证",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://github.com/mpv-player/mpv/releases/tag/git-release",
+        "confidence": "high"
+      },
+      {
+        "competitor": "Infuse",
+        "move": "发布Infuse 8.4，新增Extras内容浏览、社区驱动的片头/片尾跳过、Home Screen Favorites及播放核心重写",
+        "ourResponse": "对比分析其片头/片尾跳过机制是否基于社区规则库（如TVDB/TMDB元数据+用户贡献标记），评估是否可快速集成类似能力至我方智能跳过模块",
+        "urgency": "this_quarter",
+        "sourceUrl": "https://firecore.com/blog",
+        "confidence": "medium"
+      }
+    ],
+    "featureGapAlert": [
+      {
+        "feature": "社区驱动的片头/片尾跳过",
+        "whoHasIt": [
+          "Infuse"
+        ],
+        "userDemandSignal": "Infuse 8.4官方博客明确将其列为关键卖点；用户评论中虽未直接提及，但MX Player有用户提出'希望能增加replay gain功能'，反映对播放体验自动化优化的普遍诉求",
+        "priority": "medium"
+      },
+      {
+        "feature": "A-B循环播放",
+        "whoHasIt": [
+          "nPlayer",
+          "VLC",
+          "zFuse"
+        ],
+        "userDemandSignal": "Infuse用户明确请求'希望加入A-B循环功能，nPlayer、VLC和zFuse……都支持'，并称'那样就更专业了，手机里面就可以只留Infuse一个播放器了'",
+        "priority": "high"
+      }
+    ]
+  },
+  "userVoice": {
+    "unmetNeeds": [
+      {
+        "need": "本地视频播放无需付费墙",
+        "evidence": "Infuse用户称'强制收费了？自己导入的视频不让播放了，一点开视频就是付费页面，关闭付费页面就回到视频列表'",
+        "affectedApps": [
+          "Infuse"
+        ],
+        "opportunity": "将‘本地文件免订阅播放’作为核心价值主张，在应用商店副标题与首次启动引导中强化传达，与Infuse形成鲜明对比"
+      },
+      {
+        "need": "中文字幕编码自动兼容（非仅UTF-8）",
+        "evidence": "VLC用户反复抱怨'UTF-8可以显示的，APP里不行'、'简体中文和繁体中文都有这个问题'、'调整编码字体都没用'",
+        "affectedApps": [
+          "VLC"
+        ],
+        "opportunity": "推出‘智能字幕编码引擎’，支持GB18030/GBK双模fallback，并在设置中提供‘一键修复乱码’快捷按钮，降低用户操作门槛"
+      }
+    ],
+    "satisfactionShifts": [
+      {
+        "app": "VLC",
+        "direction": "down",
+        "signal": "iOS与Google Play双平台均出现集中差评，1星占比达47%（26条中12条），且时间跨度覆盖2025-09至2026-06，最新差评仍密集出现在2026-05至2026-06",
+        "implication": "用户基础信任正在流失，若不及时修复，可能加速向Infuse/nPlayer迁移"
+      },
+      {
+        "app": "Infuse",
+        "direction": "down",
+        "signal": "App Store新增5条闪退相关差评（含Mac端、Apple TV新场景），并出现‘强制收费’信任质疑，与上期报告中‘稳定性缺陷未收敛’形成连续恶化趋势",
+        "implication": "高端付费用户群体满意度正快速下滑，需立即干预以避免ARPU值下降"
+      }
+    ]
+  },
+  "techTrends": [
+    {
+      "trend": "macOS 26 ARM原生支持成为桌面播放器标配",
+      "evidence": "mpv发布git-release构建明确支持macOS 26 ARM；IINA v1.4.4发布说明中未提及其对macOS 26的适配状态，但GitHub仓库活跃度高（lastCommitDate: 2026-07-03）",
+      "implication": "我方macOS版需在下个版本中完成macOS 26 ARM原生适配，否则将丧失性能与能效优势",
+      "timeframe": "short_term"
+    }
+  ],
+  "weekOverWeek": {
+    "newThisWeek": [
+      "VLC Google Play出现跨平台同步差评：'中文srt字幕乱码😡😡😡'",
+      "Infuse新增Mac端暂停功能失效差评",
+      "Infuse出现‘强制收费’导致本地视频播放跳转付费页的信任危机",
+      "mpv发布支持macOS 26 ARM的git-release构建",
+      "IINA发布v1.4.4修复URL scheme命令注入漏洞"
+    ],
+    "continuedFromLastWeek": [
+      "VLC iOS 26.x中文字幕乱码问题持续爆发（新增8条2026-01至2026-06差评）",
+      "Infuse 8.4播放列表闪退问题未收敛（App Store持续出现'一点播放列表就nm闪退'）",
+      "Infuse Apple TV同步崩溃问题持续（'切换账户后infuse不同步'）"
+    ],
+    "resolvedOrFaded": []
+  },
+  "dataQuality": {
+    "sourcesUsed": [
+      "ios_rss_and_google_play",
+      "github_releases_and_web",
+      "itunes_lookup_and_github_api",
+      "github_api"
+    ],
+    "sourcesFailed": [
+      "algolia_hn_search"
+    ],
+    "overallConfidence": "high",
+    "caveat": "Hacker News无相关讨论，技术趋势分析主要依赖GitHub动态，缺乏HN社区观点佐证"
+  }
+}
